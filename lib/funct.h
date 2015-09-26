@@ -11,18 +11,13 @@ void signalHandler(int sig){
 	}
 }
 
-/*int renderCLI(char *pNumber){
-	system("clear");
-	printf("%s\n", pNumber);
-}*/
-
-void render(int lcdDisplay, const char *Value, char *String){
+void render(int lcdDisplay, char *Var, char *String){
 	lcdClear(lcdDisplay);
 	lcdPosition(lcdDisplay, FirstCol, FirstRow);
 	lcdPrintf(lcdDisplay, "%s", String);
 	lcdPosition(lcdDisplay, FirstCol, SecondRow);
-	lcdPrintf(lcdDisplay, "%s", Value);
-	printf("%s\n", Value);
+	lcdPrintf(lcdDisplay, "%s", Var);
+	printf("%s\n", Var);
 }
 
 int scrollUp(int i) {
@@ -39,9 +34,4 @@ int scrollDown(int i) {
 	else
 		i++;
 	return i;
-}
-
-void flushMalloc(char *pNumber, char *Nominal) {
-	free(pNumber);
-	free(Nominal);
 }

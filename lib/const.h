@@ -33,7 +33,7 @@
 
 #define stringLen	25
 #define pNumLen		15
-#define nmLen		7
+#define nmLen		9
 
 #define pvQty		3
 

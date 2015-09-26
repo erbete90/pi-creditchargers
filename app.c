@@ -17,37 +17,35 @@ int main(){
 							  DB0, DB1, DB2, DB3,
 							  DB4, DB5, DB6, DB7);
 
-	char *pNumber;
-	char *Nominal;
+	char pNumber[pNumLen];
+	char Nominal[nmLen];
 	char *stringHandler;
 
 	int Key, x = 0;
 
 	while(1){
 		int i = 0;
-		pNumber = (char *) malloc (pNumLen * sizeof(char));
-		Nominal = (char *) malloc (nmLen * sizeof(char));
-		stringHandler = (char *) malloc (stringLen * sizeof(char));
-		memset(pNumber, 0, pNumLen * sizeof(char));
-		memset(Nominal, 0, nmLen * sizeof(char));
-		memset(stringHandler, 0, stringLen * sizeof(char));
+		memset(pNumber, '\0', sizeof(pNumber));
+		memset(Nominal, '\0', sizeof(Nominal));
 
 		lcdClear(lcdDisplay);
 		stringHandler = inpNum;
-		render(lcdDisplay, '\0', stringHandler);
+		render(lcdDisplay, "_", stringHandler);
 
 		do {
 			Key = getch();
 			pNumber[i] = Key;
-
+			
 			if (Key == KeyBspace) {
 				i -= 1;
 				pNumber[i] = '\0';
 				render(lcdDisplay, pNumber, stringHandler);
 			} else if (Key == KeyDel) {
 				i = 0;
-				memset(pNumber, 0, pNumLen * sizeof(char));
 				render(lcdDisplay, pNumber, stringHandler);
+			} else if(i == pNumLen - 1){
+				printf("Max Reached\n");
+				continue;
 			} else {
 				render(lcdDisplay, pNumber, stringHandler);
 				i++;
@@ -73,11 +71,11 @@ int main(){
 
 		i = 0;
 		stringHandler = inpNom;
-		render(lcdDisplay, '\0', stringHandler);
+		render(lcdDisplay, "_", stringHandler);
 		
 		do {
 			Key = getch();
-			Nominal[i] = Key;
+			Nominal[i] = (char)Key;
 
 			if (Key == KeyBspace) {
 				i -= 1;
@@ -85,24 +83,20 @@ int main(){
 				render(lcdDisplay, Nominal, stringHandler);
 			} else if (Key == KeyDel) {
 				i = 0;
-				memset(Nominal, 0, nmLen * sizeof(char));
 				render(lcdDisplay, Nominal, stringHandler);
-			} else {
+			} else if(i == nmLen - 1){
+				printf("Max Reached\n");
+				continue;
+			}else {
 				render(lcdDisplay, Nominal, stringHandler);
 				i++;
 			}
 		} while (Key != KeyEnter);
 		Nominal[i-1] = '\0';
+		
+		printf("%s, %s, %s\n", pNumber, pv[x].pvName, Nominal);
+		
 		lcdClear(lcdDisplay);
-
-		lcdPosition(lcdDisplay, FirstCol, FirstRow);
-		lcdPrintf(lcdDisplay, "%s $s", Nominal, pv[x].pvName);
-
-		lcdPosition(lcdDisplay, FirstCol, FirstRow);
-		lcdPrintf(lcdDisplay, "%s", pNumber);
-
-		flushMalloc(pNumber, Nominal);
 	}
-	flushMalloc(pNumber, Nominal);
 	return 0;
 }
