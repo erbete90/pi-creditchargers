@@ -44,7 +44,7 @@ int main(){
 				i = 0;
 				render(lcdDisplay, pNumber, stringHandler);
 			} else if(i == pNumLen - 1){
-				printf("Max Reached\n");
+				render(lcdDisplay, "Max input reached!", stringHandler);
 				continue;
 			} else {
 				render(lcdDisplay, pNumber, stringHandler);
@@ -85,7 +85,7 @@ int main(){
 				i = 0;
 				render(lcdDisplay, Nominal, stringHandler);
 			} else if(i == nmLen - 1){
-				printf("Max Reached\n");
+				render(lcdDisplay, "Max input reached!", stringHandler);
 				continue;
 			}else {
 				render(lcdDisplay, Nominal, stringHandler);
