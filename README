@@ -1,0 +1,3 @@
+Compile Using
+$ gcc app.c -o app.o -lwiringPi -lwiringPiDev
+
