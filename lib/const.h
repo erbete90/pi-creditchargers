@@ -35,15 +35,26 @@
 #define pNumLen		15
 #define nmLen		9
 
+/* Define Database Stuf */
+
+char *hostname		= "localhost";
+char *sqlUser		= "root";
+char *sqlPass		= "root";
+char *dataBase		= "app";
+char *dataCenter	= "082141646444";
+
+#define queryLen		4096
+#define nonFlashFormat	0
+
 #define pvQty		3
 
 typedef struct s_providerData {
-	int pvCode;
+	char pvCode;
 	char pvName[25];
 } Provider;
 
 Provider pv[pvQty] = {
-	{1, "Telkomsel"},
-	{2, "Indosat"},
-	{3, "XL"}
+	{'1', "Telkomsel"},
+	{'2', "Indosat"},
+	{'3', "XL"}
 };

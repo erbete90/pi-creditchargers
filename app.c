@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <signal.h>
+
+#include <mysql.h>
+
 #include "lib/getch.h"
 #include "lib/const.h"
 #include "lib/funct.h"
@@ -20,6 +23,12 @@ int main(){
 	char pNumber[pNumLen];
 	char Nominal[nmLen];
 	char *stringHandler;
+	
+	MYSQL *Con;
+	MYSQL *realCon;
+	
+	char query[queryLen];
+	int queryBuff = sizeof(query);
 
 	int Key, x = 0;
 
@@ -27,6 +36,9 @@ int main(){
 		int i = 0;
 		memset(pNumber, '\0', sizeof(pNumber));
 		memset(Nominal, '\0', sizeof(Nominal));
+		
+		Con = mysql_init(NULL);
+		realCon = mysql_init(NULL);
 
 		lcdClear(lcdDisplay);
 		stringHandler = inpNum;
@@ -93,6 +105,16 @@ int main(){
 			}
 		} while (Key != KeyEnter);
 		Nominal[i-1] = '\0';
+		
+		realCon = mysql_real_connect(Con, hostname, sqlUser, sqlPass, dataBase, 0, NULL, 0);
+		if (realCon == NULL){
+			exit(1);
+		}
+		
+		snprintf(query, queryBuff, "INSERT INTO outbox(DestinationNumber, Class, TextDecoded) VALUES ('%s', '%s', '%s.%c.%s')", dataCenter, nonFlashFormat, pNumber, pv[x].pvCode, Nominal);
+		
+		mysql_query(Con, query);
+		mysql_close(Con);
 		
 		printf("%s, %s, %s\n", pNumber, pv[x].pvName, Nominal);
 		
