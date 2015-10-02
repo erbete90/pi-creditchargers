@@ -1,6 +1,6 @@
 Compile Using
 $ gcc app.c -o app.o -lwiringPi -lwiringPiDev `mysql_config --cflags --libs`
 
-Make sure the mysql server already installed on raspberry pi.
-Create a database "app", and import app.sql by using the command:
+Make sure  MySQL server already installed on raspberry pi.
+Create database "app", import app.sql by using this command:
 $ mysql -u root -p app < app.sql
